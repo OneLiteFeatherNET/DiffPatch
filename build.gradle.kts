@@ -2,13 +2,14 @@ plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("signing")
-    id("de.chojo.publishdata") version "1.4.0"
     id("maven-publish")
+    id("net.kyori.indra") version "3.1.3"
+    id("net.kyori.indra.publishing") version "3.1.3"
     `java-gradle-plugin`
 }
 
 group = "dev.onelitefeather"
-version = "1.5.4"
+version = "1.5.1"
 
 java {
     withJavadocJar()
@@ -79,44 +80,43 @@ tasks {
         relocate("org.apache", "codechicken.repack.org.apache")
         relocate("org.tukaani", "codechicken.repack.org.tukaani")
         relocate("joptsimple", "codechicken.repack.joptsimple")
-
-        /*transform<com.github.jengelman.gradle.plugins.shadow.transformers.PropertiesFileTransformer> {
-            paths = listOf("joptsimple/ExceptionMessages.properties", "joptsimple/HelpFormatterMessages.properties")
-            keyTransformer = { key ->
-                key.replace(Regex("^(joptsimple\\..*)$"), "codechicken.repack.$1")
-            }
-        }*/
     }
 }
 
-
-
-// configure publish data
-publishData {
-    useEldoNexusRepos()
-    publishComponent("java")
-}
-
-publishing {
-    publications.create<MavenPublication>("maven") {
-        publishData.configurePublication(this)
+indra {
+    includeJavaSoftwareComponentInPublications(true)
+    publishReleasesTo("eldo", "https://eldonexus.de/repository/maven-releases/")
+    publishSnapshotsTo("eldo", "https://eldonexus.de/repository/maven-snapshots/")
+    javaVersions {
+        target(17)
+        testWith(17)
     }
 
-    repositories {
-        maven {
-            authentication {
-                credentials(PasswordCredentials::class) {
-                    username = System.getenv("NEXUS_USERNAME")
-                    password = System.getenv("NEXUS_PASSWORD")
+    github("OneLiteFeatherNET", "DiffPatch") {
+        ci(true)
+        publishing(false)
+    }
+    mitLicense()
+    signWithKeyFromPrefixedProperties("onelitefeather")
+    configurePublications {
+        pom {
+            developers {
+                developer {
+                    id.set("themeinerlp")
+                    name.set("Phillipp Glanz")
+                    email.set("p.glanz@madfix.me")
+                }
+                developer {
+                    id.set("covers1624")
+                    name.set("covers1624")
+                }
+                developer {
+                    id.set("ChickenBones")
+                    name.set("Chicken Bones")
                 }
             }
-            name = "EldoNexus"
-            url = uri(publishData.getRepository())
         }
     }
-}
-publishing.publications.forEach {
-    println(it.name)
 }
 signing {
     val signingKey = findProperty("onelitefeatherSigningKey") as String?

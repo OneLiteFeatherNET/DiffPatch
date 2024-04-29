@@ -28,14 +28,14 @@ jobs:
         run: |
           git config --global user.email "no-reply@github.com"
           git config --global user.name "Github Actions"
-          ./gradlew publish -PforceSign=true -PeldoUsername=${{ secrets.ELDO_USERNAME }} -PeldoPassword=${{ secrets.ELDO_PASSWORD }}
+          ./gradlew publish -PforceSign=true
           echo "Version: ${TAG_VERSION}" >> $GITHUB_STEP_SUMMARY
         env:
           TAG_VERSION: ${{ github.ref_name }}
           GPG_PRIVATE_KEY: ${{ secrets.ONELITEFEATHER_GPG_KEY }}
           GPG_PASSPHRASE: ${{ secrets.ONELITEFEATHER_GPG_PASSWORD }}
-          NEXUS_USERNAME: "${{ secrets.ELDO_USERNAME }}"
-          NEXUS_PASSWORD: "${{ secrets.ELDO_PASSWORD }}"
+          ORG_GRADLE_PROJECT_eldoUsername: "${{ secrets.ELDO_USERNAME }}"
+          ORG_GRADLE_PROJECT_eldoPassword: "${{ secrets.ELDO_PASSWORD }}"
           ORG_GRADLE_PROJECT_onelitefeatherSigningKey: "${{ secrets.ONELITEFEATHER_GPG_KEY }}"
           ORG_GRADLE_PROJECT_onelitefeatherSigningPassword: "${{ secrets.ONELITEFEATHER_GPG_PASSWORD }}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
