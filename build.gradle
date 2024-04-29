@@ -99,7 +99,7 @@ signing {
     def signingKey = findProperty("onelitefeatherSigningKey")
     def signingPassword = findProperty("onelitefeatherSigningPassword")
     useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications.mavenJava
+    sign publishing.publications.maven
 }
 
 // configure publish data
