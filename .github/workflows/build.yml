@@ -34,8 +34,8 @@ jobs:
           TAG_VERSION: ${{ github.ref_name }}
           GPG_PRIVATE_KEY: ${{ secrets.ONELITEFEATHER_GPG_KEY }}
           GPG_PASSPHRASE: ${{ secrets.ONELITEFEATHER_GPG_PASSWORD }}
-          ORG_GRADLE_PROJECT_eldoUsername: "${{ secrets.ELDO_USERNAME }}"
-          ORG_GRADLE_PROJECT_eldoPassword: "${{ secrets.ELDO_PASSWORD }}"
+          NEXUS_USERNAME: "${{ secrets.ELDO_USERNAME }}"
+          NEXUS_PASSWORD: "${{ secrets.ELDO_PASSWORD }}"
           ORG_GRADLE_PROJECT_onelitefeatherSigningKey: "${{ secrets.ONELITEFEATHER_GPG_KEY }}"
           ORG_GRADLE_PROJECT_onelitefeatherSigningPassword: "${{ secrets.ONELITEFEATHER_GPG_PASSWORD }}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
