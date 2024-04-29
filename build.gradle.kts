@@ -9,7 +9,8 @@ plugins {
 }
 
 group = "dev.onelitefeather"
-version = "1.5.1"
+val baseVersion = "1.5.0"
+version = System.getenv("TAG_VERSION") ?: "$baseVersion-dev"
 
 java {
     withJavadocJar()
