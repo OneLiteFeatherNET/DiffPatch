@@ -1,11 +1,9 @@
 plugins {
-    id("java")
+    java
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("signing")
-    id("maven-publish")
     id("net.kyori.indra") version "3.1.3"
     id("net.kyori.indra.publishing") version "3.1.3"
-    `java-gradle-plugin`
+    signing
 }
 
 group = "dev.onelitefeather"
@@ -60,6 +58,8 @@ tasks {
         useJUnitPlatform()
     }
     jar {
+        from(sourceSets["gradle"].output)
+        from(sourceSets.main.get().output)
         manifest {
             attributes("Main-Class" to "codechicken.diffpatch.DiffPatch")
         }
@@ -73,6 +73,7 @@ tasks {
 
         from(file("LICENSE.txt"))
         from(sourceSets["gradle"].output)
+        from(sourceSets.main.get().output)
         exclude("META-INF/maven/**")
         exclude("module-info.class")
 
@@ -85,7 +86,6 @@ tasks {
 }
 
 indra {
-    includeJavaSoftwareComponentInPublications(true)
     publishReleasesTo("eldo", "https://eldonexus.de/repository/maven-releases/")
     publishSnapshotsTo("eldo", "https://eldonexus.de/repository/maven-snapshots/")
     javaVersions {
