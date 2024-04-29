@@ -118,9 +118,3 @@ indra {
         }
     }
 }
-signing {
-    val signingKey = findProperty("onelitefeatherSigningKey") as String?
-    val signingPassword = findProperty("onelitefeatherSigningPassword") as String?
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign(publishing.publications["maven"])
-}
