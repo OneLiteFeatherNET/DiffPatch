@@ -8,7 +8,7 @@ plugins {
 
 group 'dev.onelitefeather'
 archivesBaseName = 'DiffPatch'
-version '1.5.1'
+version '1.5.4'
 
 targetCompatibility = "17"
 sourceCompatibility = "17"
